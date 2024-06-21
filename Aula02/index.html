@@ -1,0 +1,24 @@
+<!--
+No projeto criado na semana anterior iremos salvar cada um comentario que o usuário inseriu no localStorage em formato de objeto.
+Para melhorar mais a experiência crie um array de objetos onde toda vez que o usuário salvar o seu comentário irá adicionar 
+mais um item no array e por fim salve esse array no localStorage.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salvar Comentários</title>
+</head>
+<body>
+    <h1>Salvar Comentários</h1>
+    <textarea id="commentInput" rows="4" cols="50"></textarea><br>
+    <button onclick="salvarComentario()">Salvar Comentário</button>
+
+    <h2>Comentários Salvos:</h2>
+    <ul id="commentList"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>

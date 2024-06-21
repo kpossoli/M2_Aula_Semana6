@@ -1,0 +1,86 @@
+<!--
+Vamos utilizar a api Rick and Morty para fazer um mini relatório os personagens do desenho em tela. O fluxo da aplicação consiste em ao carregar a tela ele deve trazer a imagem, o nome, a espécie e o nome de onde é a sua origem.
+Observações:
+A chamada GET deverá ser feita para a url https://rickandmortyapi.com/api/character/{id}
+Para carregar a imagem obtenha a tag html img e no seu atributo src defina que ele será igual a propriedade image do objeto vindo do backend.
+O nome será a propriedade name, a espécie será species e o nome de origem é o name dentro da propriedade origin
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personagem Rick and Morty</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #0080ff;
+        }
+        img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .character-info {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 0 auto;
+        }
+        .character-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Personagem Rick and Morty</h1>
+    <div class="character-info">
+        <img id="character-image" src="" alt="Imagem do Personagem">
+        <p><strong>Nome:</strong> <span id="character-name"></span></p>
+        <p><strong>Espécie:</strong> <span id="character-species"></span></p>
+        <p><strong>Origem:</strong> <span id="character-origin"></span></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarPersonagem();
+        });
+
+        async function carregarPersonagem() {
+            const characterId = getRandomCharacterId(); // Função para obter um ID aleatório, implementação abaixo
+            const url = `https://rickandmortyapi.com/api/character/${characterId}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Não foi possível obter o personagem.');
+                }
+                const data = await response.json();
+                console.log(data);
+
+                const characterImage = document.getElementById('character-image');
+                characterImage.src = data.image;
+                characterImage.alt = `Imagem de ${data.name}`;
+
+                document.getElementById('character-name').textContent = data.name;
+                document.getElementById('character-species').textContent = data.species;
+                document.getElementById('character-origin').textContent = data.origin.name;
+            } catch (error) {
+                console.error('Erro ao carregar personagem:', error);
+                alert('Erro ao carregar personagem. Tente novamente mais tarde.');
+            }
+        }
+
+        function getRandomCharacterId() {
+            // Retorna um ID aleatório entre 1 e 671 (quantidade total de personagens na API)
+            return Math.floor(Math.random() * 671) + 1;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!--
+Agora juntos iremos construir passo a passo uma comunicação para uma API pública.
+
+Construa a comunicação para adquirir informações sobre um determinado pokémon, para isso utilize a documentação na url https://pokeapi.co/ 
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações de Pokémon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #e64949;
+        }
+        img {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Informações de Pokémon</h1>
+    <div id="pokemon-info">
+        <input type="text" id="pokemon-name" placeholder="Digite o nome do Pokémon">
+        <button onclick="buscarPokemon()">Buscar</button>
+    </div>
+    <div id="resultado"></div>
+
+    <script>
+        async function buscarPokemon() {
+            const nomePokemon = document.getElementById('pokemon-name').value.toLowerCase().trim();
+            if (!nomePokemon) {
+                alert('Por favor, digite o nome do Pokémon.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nomePokemon}`);
+                if (!response.ok) {
+                    throw new Error('Não foi possível encontrar o Pokémon.');
+                }
+                const data = await response.json();
+                console.log(data);
+
+                const resultado = document.getElementById('resultado');
+                resultado.innerHTML = `
+                    <h2>${data.name.toUpperCase()}</h2>
+                    <img src="${data.sprites.front_default}" alt="${data.name}">
+                    <p><strong>Altura:</strong> ${data.height / 10} m</p>
+                    <p><strong>Peso:</strong> ${data.weight / 10} kg</p>
+                    <p><strong>Tipo(s):</strong> ${data.types.map(type => type.type.name).join(', ')}</p>
+                `;
+            } catch (error) {
+                console.error('Erro ao buscar Pokémon:', error);
+                alert('Erro ao buscar Pokémon. Verifique o nome digitado.');
+            }
+        }
+    </script>
+</body>
+</html>

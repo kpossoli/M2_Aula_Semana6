@@ -1,0 +1,50 @@
+<!--
+Escreva uma função em JavaScript que simula a verificação da disponibilidade de um produto em estoque. A função deve retornar uma Promise que será resolvida se o produto estiver disponível e rejeitada se o produto não estiver disponível.
+OBS:
+Crie uma função verificarDisponibilidade que aceite um parâmetro produto.
+A função deve retornar uma Promise.
+A Promise deve ser resolvida se o produto estiver disponível (use um array de produtos disponíveis para a verificação).
+A Promise deve ser rejeitada se o produto não estiver disponível.
+Use setTimeout para simular um atraso na verificação do produto (2 segundos).
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Disponibilidade de Produto</title>
+</head>
+<body>
+    <h1>Verificação de Disponibilidade de Produto</h1>
+    <div id="resultado"></div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Cole aqui o código JavaScript
+        function verificarDisponibilidade(produto) {
+            const produtosDisponiveis = ['produto1', 'produto2', 'produto3'];
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (produtosDisponiveis.includes(produto)) {
+                        resolve(`O produto "${produto}" está disponível.`);
+                    } else {
+                        reject(`O produto "${produto}" não está disponível.`);
+                    }
+                }, 2000);
+            });
+        }
+
+        verificarDisponibilidade('produto')
+            .then((mensagem) => {
+                console.log(mensagem);
+                document.getElementById('resultado').innerText = mensagem;
+            })
+            .catch((erro) => {
+                console.error(erro);
+                document.getElementById('resultado').innerText = erro;
+            });
+    </script>
+</body>
+</html>
